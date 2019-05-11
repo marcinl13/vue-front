@@ -1,0 +1,131 @@
+/* KAFELKI */
+.books {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.kafelka {
+  float: left;
+  width: 11rem;
+  height: 22rem;/*560px*/
+  display: inline-flex;
+  margin: 5px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+  border-radius: 5px;
+  border-color: transparent;
+  border: 1px solid #dbdbdb;
+}
+
+.preview{
+  width: 10rem;
+  height: 13rem;
+}
+
+.kafelka>img {
+  padding: 5px;
+  /*max-width: 250px;
+  max-height: 380px;*/
+  width: 10rem;
+  height: 13rem;
+}
+
+.kafelka q {
+  font-size: 17px;
+}
+
+.kafelka:nth-child(odd) {
+  background: #E2E4FF;
+}
+
+.kafelka>* {
+  /* display: inline-flex; */
+}
+
+/* ORDER ICON */
+.order {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.order>span {
+  color: red;
+  text-align: left;
+  position: relative;
+  left: -14px;
+  top: -4px;
+}
+
+.order>img {
+  width: 32px;
+  height: 32px;
+}
+
+.waiting {
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+}
+
+.test {
+  float: inline-start;
+  margin-top: 113px;
+  height: 25px;
+  flex: -moz-available;
+  display: flex;
+}
+
+/* framework */
+.fa {
+  min-width: 1.0em;
+  color: rgba(0, 0, 0, .325);
+}
+
+.form-control {
+  box-sizing: border-box;
+  display: inline-block;
+  width: auto;
+  margin-bottom: 1.0em;
+}
+
+.modal-small {
+  max-width: 336px;
+}
+
+.close {
+  color: #ff1a1a;
+  font-size: 40px;
+  margin-right: 5px;
+}
+
+.small-img {
+  height: 200px;
+  width: 140px;
+}
+
+.center {
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+}
+
+.breadcrumb {
+  background-color: #b8daff;
+  padding: unset;
+  padding-left: 16px;
+}
+
+.icon-sm {
+  width: 32px;
+  height: 32px;
+  padding-right: 2px;
+}
+
+.szukaj {
+  display: inline-flex;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+}
