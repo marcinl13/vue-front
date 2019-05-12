@@ -21,7 +21,7 @@ export default Vue.component("component-pagitation", {
     }
   },
   template: `
-    <div class="d-flex justify-content-center  w-25">      
+    <div class="d-flex justify-content-center" style="max-width:150px;">      
       <button class="form-control btn btn-sm btn-outline-info" type="button" v-on:click="prevPage();scrollToTop()"><<</button>
       <p class="px-3 h-1 my-auto">{{currentPage}} / {{totalPages()}}</p>
       <button class="form-control btn btn-sm btn-outline-info" type="button" v-on:click="nextPage();scrollToTop()">>></button> 

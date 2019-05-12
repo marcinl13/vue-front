@@ -1,7 +1,9 @@
 /* KAFELKI */
 .books {
   display: inline-block;
-  max-width: 100%;
+  max-width: 90%;
+  min-width: 460px;
+  margin: 0px 5%;
 }
 
 .kafelka {

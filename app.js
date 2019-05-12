@@ -19,7 +19,7 @@ const routes = [
 
   { path: "/sAutors", component: sAutors },
   { path: "/sBooks", component: sBooks },
-  { path: "/sOrders", component: sOrders },
+  { path: "/sOrders", component: sOrders }
 ];
 
 const router = new VueRouter({
@@ -36,5 +36,4 @@ const navBar = new Vue({
   },
   template: `<accountMenu />`
 }).$mount("#navbar");
-
 

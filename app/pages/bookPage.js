@@ -8,6 +8,7 @@ export default Vue.component("component-bookPage", {
       currentSort: "tytul",
       currentSortDir: "asc",
       currentPage: 1,
+      onfilterLength: 1,
       selected: 5,
       filtruj: "",
       optionBarSettingsTop: {
@@ -30,6 +31,8 @@ export default Vue.component("component-bookPage", {
           r: this.filtruj
         });
       else this.books = serverGet(settings.apiUrl + "/books2");
+
+      this.onfilterLength = this.books.length;
     },
     addBookToOrder: function(_num) {
       console.log(_num);
@@ -48,7 +51,10 @@ export default Vue.component("component-bookPage", {
           if (this.currentPage > 1) this.currentPage--;
         }
         if (_typ == "+") {
-          if (this.currentPage * this.selected < this.books.length)
+          if (
+            this.currentPage * this.selected <
+            this.onfilterLength
+          )
             this.currentPage++;
         }
         if (_typ == "start") {
@@ -57,12 +63,22 @@ export default Vue.component("component-bookPage", {
         return false;
       } catch (error) {}
     },
-    searchBy: function(_sth) {
-      this.filtruj = _sth;
-      this.pobierzDane();
-    },
     itemListCount: function(_num) {
       this.selected = _num;
+    },
+    searchBy: function(_sth) {
+      this.filtruj = _sth;
+      this.onFilter();
+    },
+    onFilter: function() {
+      var fil = this.filtruj;
+      var data = this.books.filter(function(data) {
+        return data.tytul.toLowerCase().indexOf(fil.toLowerCase()) == 0;
+      });
+
+      this.onfilterLength = data.length;
+
+      return data;
     }
   },
   components: {
@@ -70,12 +86,14 @@ export default Vue.component("component-bookPage", {
   },
   computed: {
     sortedBooks: function() {
-      return this.books
+      return this.onFilter()
         .sort((a, b) => {
           let modifier = 1;
           if (this.currentSortDir === "desc") modifier = -1;
-          if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-          if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+          if (a[this.currentSort] < b[this.currentSort])
+            return -1 * modifier;
+          if (a[this.currentSort] > b[this.currentSort])
+            return 1 * modifier;
           return 0;
         })
         .filter((row, index) => {
@@ -88,14 +106,14 @@ export default Vue.component("component-bookPage", {
   template: `
   <div >
     <optionBar
-      :dataSize=books.length
+      :dataSize=onfilterLength
       :itemListCount=itemListCount
       :pagi=pagi :currentPage=currentPage  :selectRows=selected 
       :searchBy=searchBy 
       :optionBarSettings=optionBarSettingsTop
     />
 
-    <div class="books d-flex justify-content-center justify-items-center">
+    <div class="books">
       <div class="kafelka" v-for="book in sortedBooks">
         <img :src="book.zdjecie" class="card-img-top">
         <q>{{book.tytul}}</q>
@@ -106,7 +124,7 @@ export default Vue.component("component-bookPage", {
     </div>
 
     <optionBar
-      :dataSize=books.length
+      :dataSize=onfilterLength
       :itemListCount=itemListCount
       :pagi=pagi :currentPage=currentPage  :selectRows=selected 
       :searchBy=searchBy 

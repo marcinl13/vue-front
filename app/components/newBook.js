@@ -42,7 +42,7 @@ export default Vue.component("component-newBook", {
           this.reload();
         })
         .catch(error => {
-          Swal.fire("Błąd", error, "error");
+          Swal.fire("Błąd", error.responseJSON.message, "error");
         });
     }
   },

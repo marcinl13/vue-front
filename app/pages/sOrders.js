@@ -167,7 +167,7 @@ export default Vue.component("component-sOrders", {
           });
         }
       });
-    }
+    },    
   },
   components: { optionBar: optionBar },
   computed: {

@@ -32,7 +32,7 @@ export default Vue.component("component-newAutor", {
           this.reload();
         })
         .catch(error => {
-          Swal.fire("Błąd", error, "error");
+          Swal.fire("Błąd", error.responseJSON.message, "error");
         });
     }
   },

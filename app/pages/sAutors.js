@@ -10,12 +10,14 @@ export default Vue.component("component-sAutors", {
       sAutors: [{}],
       currentSort: "id",
       currentSortDir: "desc",
+      onfilterLength: 1,
       currentPage: 1,
       selected: 5,
       filtruj: "",
       optionBarSettingsTop: {
         newButton: true,
         selectByPage: true,
+        searchBy: true,
         pagitation: true
       },
       optionBarSettingsBottom: {
@@ -48,13 +50,6 @@ export default Vue.component("component-sAutors", {
         this.sAutors = serverGet(
           settings.apiUrl + "/autor?userapikey=" + this.token.token
         );
-
-        // console.log(
-        //   1,
-        //   serverGet(settings.apiUrl + "/autor", {
-        //     userapikey: token.token
-        //   })
-        // );
       } catch (error) {}
     },
     edytujAutora: function(_id) {
@@ -105,7 +100,7 @@ export default Vue.component("component-sAutors", {
           if (this.currentPage > 1) this.currentPage--;
         }
         if (_typ == "+") {
-          if (this.currentPage * this.selected < this.sAutors.length)
+          if (this.currentPage * this.selected < this.onfilterLength)
             this.currentPage++;
         }
         if (_typ == "start") {
@@ -119,6 +114,24 @@ export default Vue.component("component-sAutors", {
     },
     reload: function() {
       this.pobierzDane();
+    },
+    searchBy: function(_sth) {
+      this.filtruj = _sth;
+      this.onFilter();
+    },
+    onFilter: function() {
+      var fil = this.filtruj;
+
+      var data = this.sAutors.filter(function(data) {
+        return (
+          data.imie.toLowerCase().indexOf(fil.toLowerCase()) == 0 ||
+          data.nazwisko.toLowerCase().indexOf(fil.toLowerCase()) == 0
+        );
+      });
+
+      this.onfilterLength = data.length;
+
+      return data;
     }
   },
   components: {
@@ -127,7 +140,8 @@ export default Vue.component("component-sAutors", {
   },
   computed: {
     sortedAuthors: function() {
-      return this.sAutors
+      var filtered = this.onFilter();
+      return filtered
         .sort((a, b) => {
           let modifier = 1;
           if (this.currentSortDir === "desc") modifier = -1;
@@ -151,10 +165,11 @@ export default Vue.component("component-sAutors", {
     />
 
     <optionBar
-      :dataSize=sAutors.length
+      :dataSize=onfilterLength
       :itemListCount=itemListCount
       :pagi=pagi :currentPage=currentPage  :selectRows=selected 
       :optionBarSettings=optionBarSettingsTop
+      :searchBy=searchBy 
       :clickedButton=wyczyscDaneAutora
     />
 
@@ -183,7 +198,7 @@ export default Vue.component("component-sAutors", {
     </table>
 
     <optionBar
-      :dataSize=sAutors.length
+      :dataSize=onfilterLength
       :itemListCount=itemListCount
       :pagi=pagi :currentPage=currentPage  :selectRows=selected 
       :optionBarSettings=optionBarSettingsTop

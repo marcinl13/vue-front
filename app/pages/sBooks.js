@@ -9,9 +9,10 @@ export default Vue.component("component-sBooks", {
       token: "",
       sBooks: [{}],
       sAutors: [{}],
-      currentSort: "tytul",
-      currentSortDir: "asc",
+      currentSort: "id",
+      currentSortDir: "desc",
       currentPage: 1,
+      onfilterLength: 1,
       selected: 5,
       filtruj: "",
       optionBarSettingsTop: {
@@ -57,6 +58,8 @@ export default Vue.component("component-sBooks", {
       this.sAutors = serverGet(
         settings.apiUrl + "/autor?userapikey=" + this.token
       );
+
+      this.onfilterLength = this.sBooks.length;
     },
     editBook: function(_id) {
       var data = this.sBooks.filter(function(data) {
@@ -101,7 +104,7 @@ export default Vue.component("component-sBooks", {
           if (this.currentPage > 1) this.currentPage--;
         }
         if (_typ == "+") {
-          if (this.currentPage * this.selected < this.sBooks.length)
+          if (this.currentPage * this.selected < this.onfilterLength)
             this.currentPage++;
         }
         if (_typ == "start") {
@@ -109,10 +112,6 @@ export default Vue.component("component-sBooks", {
         }
         return false;
       } catch (error) {}
-    },
-    searchBy: function(_sth) {
-      this.filtruj = _sth;
-      this.getData();
     },
     itemListCount: function(_num) {
       this.selected = _num;
@@ -123,12 +122,29 @@ export default Vue.component("component-sBooks", {
       document.getElementById("autor").value = 0;
       document.getElementById("cena").value = "";
       document.getElementById("zdjecie").value = "";
+    },
+    searchBy: function(_sth) {
+      this.filtruj = _sth;
+      // this.getData();
+      this.onFilter();
+    },
+    onFilter: function() {
+      var fil = this.filtruj;
+
+      var data = this.sBooks.filter(function(data) {
+        return data.tytul.toLowerCase().indexOf(fil.toLowerCase()) == 0;
+      });
+
+      this.onfilterLength = data.length;
+
+      return data;
     }
   },
   components: { optionBar: optionBar, newBook: newBook },
   computed: {
     sortedBooks: function() {
-      return this.sBooks
+      var filtered = this.sBooks;
+      return filtered
         .sort((a, b) => {
           let modifier = 1;
           if (this.currentSortDir === "desc") modifier = -1;
@@ -153,7 +169,7 @@ export default Vue.component("component-sBooks", {
     />
 
     <optionBar
-      :dataSize=sBooks.length
+      :dataSize=onfilterLength
       :itemListCount=itemListCount
       :pagi=pagi :currentPage=currentPage  :selectRows=selected 
       :searchBy=searchBy 
@@ -188,7 +204,7 @@ export default Vue.component("component-sBooks", {
     </table>
 
     <optionBar
-      :dataSize=sBooks.length
+      :dataSize=onfilterLength
       :itemListCount=itemListCount
       :pagi=pagi :currentPage=currentPage  :selectRows=selected 
       :searchBy=searchBy 
