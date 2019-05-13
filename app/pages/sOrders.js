@@ -167,7 +167,7 @@ export default Vue.component("component-sOrders", {
           });
         }
       });
-    },    
+    }
   },
   components: { optionBar: optionBar },
   computed: {
@@ -197,39 +197,41 @@ export default Vue.component("component-sOrders", {
       :optionBarSettings=optionBarSettingsTop
     />
 
-    <table class="zamowienia table table-striped table-hover table-sm ">
-    <thead class="table-primary" >
-      <th class="text-center col-sm-1" style="width: 8%;">Lp.</th>
-      <th class="text-center" v-on:click="sort('dataZamowienia')">Data Zamowienia</th>
-      <th class="text-center" v-on:click="sort('dataRealizacji')">Data Realizacji</th>
-      <th class="text-center" v-on:click="sort('status')">Status</th>
-      <th class="text-left" v-on:click="sort('cena')">Cena</th>
-      <th class="text-center col-sm-2">Opcje</th>
-    </thead>
-    <tbody>
-      <tr v-for="(zamowienie,count) in sortedOrders" :class="{ 
-        'table-warning': zamowienie.status == 1 , 
-        'table-success': zamowienie.status == 2,
-        'table-light': zamowienie.status == 3}">
-        <td>{{ ((-1 + currentPage) * selected) +( count+1)}}</td>
-        <td>{{zamowienie.dataZamowienia}}</td>
-        <td>{{zamowienie.dataRealizacji}}</td>
-        <td>{{statusy[zamowienie.status]}}</td>
-        <td>{{zamowienie.cena}} zł</td>
-        <td>
-          <div style="justify-content: center;display: grid; max-width: 162">
-            <button class="btn btn-success form-control mb-1 w-100" v-on:click="generateDetailsTable(zamowienie.ksiazki)">Pokaż szczegóły</button>
-            <select class="form-control" v-if="zamowienie.status!=2" id="selectStatus" v-on:change="onChangeStatus($event.target, zamowienie.id)">
-              <option value="0">Zmień status na</option>
-              <option value="1" v-if="zamowienie.status!=1" >{{statusy[1]}}</option>
-              <option value="2" v-if="zamowienie.status!=2">{{statusy[2]}}</option>
-              <option value="3" v-if="zamowienie.status!=3">{{statusy[3]}}</option>
-            </select>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="d-flex">
+    <table class="zamowienia table table-striped table-hover w-auto my-1 mx-auto">
+      <thead class="table-primary" >
+        <th class="text-center col-sm-1" style="width: 8%;">Lp.</th>
+        <th class="text-center" v-on:click="sort('dataZamowienia')">Data Zamowienia</th>
+        <th class="text-center" v-on:click="sort('dataRealizacji')">Data Realizacji</th>
+        <th class="text-center" v-on:click="sort('status')">Status</th>
+        <th class="text-left" v-on:click="sort('cena')">Cena</th>
+        <th class="text-center col-sm-2">Opcje</th>
+      </thead>
+      <tbody>
+        <tr v-for="(zamowienie,count) in sortedOrders" :class="{ 
+          'table-warning': zamowienie.status == 1 , 
+          'table-success': zamowienie.status == 2,
+          'table-light': zamowienie.status == 3}">
+          <td>{{ ((-1 + currentPage) * selected) +( count+1)}}</td>
+          <td>{{zamowienie.dataZamowienia}}</td>
+          <td>{{zamowienie.dataRealizacji}}</td>
+          <td>{{statusy[zamowienie.status]}}</td>
+          <td>{{zamowienie.cena}} zł</td>
+          <td>
+            <div style="justify-content: center;display: grid; max-width: 162">
+              <button class="btn btn-success form-control mb-1 w-100" v-on:click="generateDetailsTable(zamowienie.ksiazki)">Pokaż szczegóły</button>
+              <select class="form-control" v-if="zamowienie.status!=2" id="selectStatus" v-on:change="onChangeStatus($event.target, zamowienie.id)">
+                <option value="0">Zmień status na</option>
+                <option value="1" v-if="zamowienie.status!=1" >{{statusy[1]}}</option>
+                <option value="2" v-if="zamowienie.status!=2">{{statusy[2]}}</option>
+                <option value="3" v-if="zamowienie.status!=3">{{statusy[3]}}</option>
+              </select>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <optionBar
       :dataSize=zamowienia.length

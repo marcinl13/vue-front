@@ -29,6 +29,7 @@ export default Vue.component("component-newAutor", {
       })
         .then(result => {
           Swal.fire("Sukces", result, "success");
+          document.getElementById("addNew").style.display = "none";
           this.reload();
         })
         .catch(error => {

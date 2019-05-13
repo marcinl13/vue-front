@@ -200,38 +200,40 @@ export default Vue.component("component-sBooks", {
       :clickedButton=clearData
     />
 
-    <table class="table table-striped table-hover table-sm w-100">
-      <thead class="table-primary">
-        <th class="text-center">Lp.</th>
-        <th class="text-center" v-on:click="sort('tytul')">Tytuł</th>
-        <th class="text-center" v-on:click="sort('autor')">Autor</th>
-        <th class="text-center" v-on:click="sort('cena')">Cena</th>
-        <th class="text-center" v-on:click="sort('zdjecie')">Zdjęcie</th>
-        <th class="text-center" >Opcje</th>
-      </thead>
-      <tbody class="table-light">
-        <tr v-for="(book, count) in sortedBooks">
-          <td class="text-center">{{ ((-1 + currentPage) * selected) +( count+1)}}</td>
-          <td class="text-center">{{book.tytul}}</td>
-          <td class="text-center">{{book.autor}}</td>
-          <td class="text-center">{{book.cena}} zł</td>
-          <td class="text-center col-sm-3">
-            <a class="thumbnail" href="#">
-              <p>podgląd</p>
-              <span>
-                <img class="small-img" :src=imagePreview(book.zdjecie) />              
-              </span>
-            </a> 
-          </td>
-          <td>
-            <div style="justify-content: center;display: grid; max-width: 162">
-              <button class="btn form-control btn-primary mb-1" v-on:click="editBook(book.id)">edytuj</button>
-              <button class="btn form-control btn-danger" v-on:click="deleteBook(book.id)">usuń</button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="d-flex">
+      <table class="table table-striped table-hover w-auto my-1 mx-auto">
+        <thead class="table-primary">
+          <th class="text-center">Lp.</th>
+          <th class="text-center" v-on:click="sort('tytul')">Tytuł</th>
+          <th class="text-center" v-on:click="sort('autor')">Autor</th>
+          <th class="text-center" v-on:click="sort('cena')">Cena</th>
+          <th class="text-center" v-on:click="sort('zdjecie')">Zdjęcie</th>
+          <th class="text-center" >Opcje</th>
+        </thead>
+        <tbody class="table-light">
+          <tr v-for="(book, count) in sortedBooks">
+            <td class="text-center">{{ ((-1 + currentPage) * selected) +( count+1)}}</td>
+            <td class="text-center">{{book.tytul}}</td>
+            <td class="text-center">{{book.autor}}</td>
+            <td class="text-center">{{book.cena}} zł</td>
+            <td class="text-center col-sm-3">
+              <a class="thumbnail" href="#">
+                <p>podgląd</p>
+                <span>
+                  <img class="small-img" :src=imagePreview(book.zdjecie) />              
+                </span>
+              </a> 
+            </td>
+            <td>
+              <div style="justify-content: center;display: grid; max-width: 162">
+                <button class="btn form-control btn-primary mb-1" v-on:click="editBook(book.id)">edytuj</button>
+                <button class="btn form-control btn-danger" v-on:click="deleteBook(book.id)">usuń</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <optionBar
       :dataSize=onfilterLength

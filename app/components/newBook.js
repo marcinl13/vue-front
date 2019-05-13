@@ -38,6 +38,7 @@ export default Vue.component("component-newBook", {
       })
         .then(result => {
           Swal.fire("Sukces", result, "success");
+          document.getElementById("addNew").style.display = "none";
           this.reload();
         })
         .catch(error => {

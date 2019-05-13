@@ -175,35 +175,35 @@ export default Vue.component("component-sAutors", {
       :clickedButton=wyczyscDaneAutora
     />
 
-    <table class="table table-striped table-hover table-sm ">
-      <thead class="table-primary">
-        <th class="text-center">Lp.</th>
-        <th class="text-center" v-on:click="sort('id')">ID</th>
-        <th class="text-center" v-on:click="sort('imie')">Imię</th>
-        <th class="text-center" v-on:click="sort('nazwisko')">Nazwisko</th>
-        <th class="text-center">Opcje</th>
-      </thead>
-      <tbody class="table-light">
-        <tr v-for="(autor, count) in sortedAuthors">
-          <td class="text-center">{{ ((-1 + currentPage) * selected) +( count+1)}}</td>
-          <td class="text-center">{{autor.id}}</td>
-          <td class="text-center">{{autor.imie}}</td>
-          <td class="text-center">{{autor.nazwisko}}</td>
-          <td>
-            <div style="justify-content: center;display: grid; max-width: 162">
-              <button class="btn form-control btn-primary" v-on:click="edytujAutora(autor.id)">edytuj</button>
-              <button class="btn form-control btn-danger" v-on:click="usunAutora(autor.id)">usuń</button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="d-flex">
+      <table class="table table-striped table-hover table-responsive w-auto my-1 mx-auto">
+        <thead class="table-primary">
+          <th class="text-center">Lp.</th>
+          <th class="text-center" v-on:click="sort('id')">ID</th>
+          <th class="text-center" v-on:click="sort('imie')">Imię</th>
+          <th class="text-center" v-on:click="sort('nazwisko')">Nazwisko</th>
+          <th class="text-center">Opcje</th>
+        </thead>
+        <tbody class="table-light">
+          <tr v-for="(autor, count) in sortedAuthors">
+            <td class="text-center">{{ ((-1 + currentPage) * selected) +( count+1)}}</td>
+            <td class="text-center">{{autor.id}}</td>
+            <td class="text-center">{{autor.imie}}</td>
+            <td class="text-center">{{autor.nazwisko}}</td>
+            <td>           
+                <button class="btn form-control btn-primary" v-on:click="edytujAutora(autor.id)">edytuj</button>
+                <button class="btn form-control btn-danger" v-on:click="usunAutora(autor.id)">usuń</button>            
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <optionBar
       :dataSize=onfilterLength
       :itemListCount=itemListCount
       :pagi=pagi :currentPage=currentPage  :selectRows=selected 
-      :optionBarSettings=optionBarSettingsTop
+      :optionBarSettings=optionBarSettingsBottom
       :clickedButton=wyczyscDaneAutora
     />
   </div>
