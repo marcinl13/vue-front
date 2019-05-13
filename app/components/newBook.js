@@ -5,8 +5,7 @@ export default Vue.component("component-newBook", {
       title: "nowa ksiażka",
       token: "",
       autorzy: [{}],
-      imgFast:
-        "https://ecsmedia.pl/c/dziady-lektura-z-opracowaniem-w-iext51857252.jpg"
+      imgFast: " "
     };
   },
   created: function() {
@@ -44,10 +43,36 @@ export default Vue.component("component-newBook", {
         .catch(error => {
           Swal.fire("Błąd", error.responseJSON.message, "error");
         });
+    },
+    validURL: function(str) {
+      var pattern = new RegExp(
+        "^(https?:\\/\\/)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+          "(\\#[-a-z\\d_]*)?$",
+        "i"
+      ); // fragment locator
+      return !!pattern.test(str);
+    },
+    imagePreview: function() {
+      var _image = document.getElementById("zdjecie").value;
+      var src =
+        "https://childrensmattressesonline.co.uk/i/others/empty-product-large.png?v=5c3fc1a0";
+
+      if (_image.length > 5) {
+        src = this.validURL(_image)
+          ? _image
+          : "https://childrensmattressesonline.co.uk/i/others/empty-product-large.png?v=5c3fc1a0";
+      }
+      // console.log(src);
+      // this.imgFast = src
+      AddimagePreview.srcset = src;
     }
   },
   template: `
-  <div class="d-flex justify-content-center">
+  <div class=" justify-content-center">
     <div class="row border mb-3 d-inline-flex">
     
       <!--<div class="col">
@@ -80,12 +105,22 @@ export default Vue.component("component-newBook", {
 
         <div class="form-group row">
           <label for="zdjecie" class="col-sm-3 col-form-label">Zdjecie</label>
-          <input type="text" class="col-sm-6 form-control" id="zdjecie" v-model="imgFast">
+          <input type="text" class="col-sm-6 form-control" id="zdjecie" v-model="imgFast" v-on:input="imagePreview()">
+          
+          <a class="thumbnail" href="#">
+              <p>podgląd</p>
+              <span>
+                <img class="small-img" id="AddimagePreview" src="" />              
+              </span>
+            </a> 
         </div>
 
         <div class="d-flex justify-content-center">
           <button class="btn btn-outline-success mx-2" v-on:click="onAddBook()">
             <i class="fa fa-save mr-1 text-dark"></i>Zapisz
+          </button>
+          <button class="btn btn-outline-danger mx-2" v-on:click="document.getElementById('addNew').style.display = 'none';">
+            <i class="fa fa-close mr-1 text-dark"></i>Close
           </button>
         </div>
       </div>

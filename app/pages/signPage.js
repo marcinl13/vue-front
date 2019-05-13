@@ -51,7 +51,7 @@ export default Vue.component("component-signPage", {
             koszykData.konto = this.logInMe;
             localStorage.setItem("koszyk", JSON.stringify(koszykData));
 
-            Swal.fire("Zalogowano", splited[0], "success");
+            Swal.fire("Zalogowano", "", "success");
 
             //redirect
             window.location.href = "/#/shop";

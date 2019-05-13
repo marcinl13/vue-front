@@ -50,14 +50,15 @@ export default Vue.component("component-sAutors", {
         this.sAutors = serverGet(
           settings.apiUrl + "/autor?userapikey=" + this.token.token
         );
+
+        document.getElementById("addNew").style.display = "none";
       } catch (error) {}
     },
     edytujAutora: function(_id) {
       var data = this.sAutors.filter(function(data) {
         return data.id == _id;
       })[0];
-
-      $(".collapse").collapse("show");
+      document.getElementById("addNew").style.display = "block";
       document.getElementById("id").value = data.id;
       document.getElementById("aFirstName").value = data.imie;
       document.getElementById("aLastName").value = data.nazwisko;
@@ -84,6 +85,7 @@ export default Vue.component("component-sAutors", {
       this.reload();
     },
     wyczyscDaneAutora: function() {
+      document.getElementById("addNew").style.display = "block";
       document.getElementById("id").value = "";
       document.getElementById("aFirstName").value = "";
       document.getElementById("aLastName").value = "";

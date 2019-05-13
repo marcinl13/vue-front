@@ -56,6 +56,9 @@ export default Vue.component("component-newAutor", {
         <button class="btn btn-outline-success mx-2" v-on:click="onAddAutor()">
           <i class="fa fa-save mr-1 text-dark"></i>Zapisz
         </button>
+        <button class="btn btn-outline-danger mx-2" v-on:click="document.getElementById('addNew').style.display = 'none';">
+          <i class="fa fa-close mr-1 text-dark"></i>Close
+        </button>
       </div>
       
     </div>
