@@ -4,7 +4,8 @@ export default Vue.component("component-koszykPage", {
   data: function() {
     return {
       productsList: [{}],
-      token: ""
+      token: "",
+      currentPage: 1
     };
   },
   created: function() {
@@ -64,12 +65,7 @@ export default Vue.component("component-koszykPage", {
 
       console.log(koszyk.join(","), this.token);
 
-      $.post(
-        "https://restmp.azurewebsites.net/api/orders?zamowienia=" +
-          koszyk.join(",") +
-          "&userAPIKEY=" +
-          this.token
-      )
+      $.post("https://restmp.azurewebsites.net/api/orders?zamowienia=" + koszyk.join(",") + "&userAPIKEY=" + this.token)
         .then(result => {
           Swal.fire("", result, "success");
 
